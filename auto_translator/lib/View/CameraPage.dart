@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:path_provider/path_provider.dart';
 
 class CameraPage extends StatefulWidget {
 
@@ -54,16 +55,26 @@ class CameraPageState extends State<CameraPage> {
   }
 
   Widget CameraPreviewWidget() {
-    return new Center(
-      child: new Text(
-        "Tap a camera",
-        style: new TextStyle(
-            color: Colors.white,
-            fontSize: 24.0,
-            fontWeight: FontWeight.w900
+    if(cameraController == null || !cameraController.value.isInitialized) {
+      return new Center(
+        child: new Text(
+          "Tap a camera",
+          style: new TextStyle(
+              color: Colors.white,
+              fontSize: 24.0,
+              fontWeight: FontWeight.w900
+          ),
         ),
-      ),
-    );
+      );
+    }
+    else {
+      return new Center(
+        child: new AspectRatio(
+          aspectRatio: cameraController.value.aspectRatio,
+          child: new CameraPreview(cameraController),
+        ),
+      );
+    }
   }
 
   Widget CameraControlWidget() {
@@ -74,7 +85,7 @@ class CameraPageState extends State<CameraPage> {
         new IconButton(
             icon: new Icon(Icons.camera_alt),
             color: Colors.white,
-            onPressed: TestOnClick
+            onPressed: TakePicture
         )
       ],
     );
@@ -99,8 +110,34 @@ class CameraPageState extends State<CameraPage> {
     );
   }
 
-  Future<Null> TestOnClick() {
+  Future<String> TakePicture() async {
+    if(!cameraController.value.isInitialized) {
+      print("cam is not initialized while taking picture");
+      return null;
+    }
+    if(cameraController.value.isTakingPicture) {
+      print("cam is already taking picture");
+      return null;
+    }
 
+    Directory exportDir = await getApplicationDocumentsDirectory();
+    String exportDirPath = exportDir.path + "/Pictures/flutter_test";
+    await new Directory(exportDirPath).create(recursive: true);
+    String exportFilePath = exportDirPath + "/" + TimeStamp() + ".jpg";
+
+    try {
+      await cameraController.takePicture(exportFilePath);
+      print("picture saved at: " + exportFilePath);
+      return exportFilePath;
+    }
+    catch(except) {
+      print("something wrong while taking picture: " + except);
+      return null;
+    }
+  }
+
+  String TimeStamp() {
+    return new DateTime.now().millisecondsSinceEpoch.toString();
   }
 
   @override
