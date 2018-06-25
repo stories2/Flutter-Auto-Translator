@@ -7,16 +7,27 @@ import 'package:path_provider/path_provider.dart';
 
 class CameraPage extends StatefulWidget {
 
+  TabController homeTabController;
+
+  CameraPage(TabController homeTabController) {
+    this.homeTabController = homeTabController;
+  }
+
   @override
   State createState() {
-    return new CameraPageState();
+    return new CameraPageState(homeTabController);
   }
 }
 
 class CameraPageState extends State<CameraPage> {
 
+  TabController homeTabController;
   List<CameraDescription> cameras;
   CameraController cameraController;
+
+  CameraPageState(TabController homeTabController) {
+    this.homeTabController = homeTabController;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +139,7 @@ class CameraPageState extends State<CameraPage> {
     try {
       await cameraController.takePicture(exportFilePath);
       print("picture saved at: " + exportFilePath);
+      homeTabController.index = 1;
       return exportFilePath;
     }
     catch(except) {

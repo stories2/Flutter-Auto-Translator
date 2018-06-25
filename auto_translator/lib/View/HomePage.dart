@@ -22,7 +22,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
       body: new TabBarView(
           controller: homeTabController,
           children: <Widget>[
-            new CameraPage(),
+            new CameraPage(homeTabController),
             new TranslateHistoryPage(),
             new DevelopPage()
           ]
