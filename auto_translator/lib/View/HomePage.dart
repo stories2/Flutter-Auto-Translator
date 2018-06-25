@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import './CameraPage.dart';
 import './TranslateHistoryPage.dart';
+import './DevelopPage.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -22,7 +23,8 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
           controller: homeTabController,
           children: <Widget>[
             new CameraPage(),
-            new TranslateHistoryPage()
+            new TranslateHistoryPage(),
+            new DevelopPage()
           ]
       ),
       bottomNavigationBar: new Material(
@@ -39,6 +41,11 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
                 icon: new Icon(
                   Icons.history
                 ),
+              ),
+              new Tab(
+                icon: new Icon(
+                  Icons.developer_mode
+                ),
               )
             ]
         ),
@@ -51,7 +58,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
   void initState() {
     super.initState();
     homeTabController = new TabController(
-        length: 2,
+        length: 3,
         vsync: this
     );
   }
