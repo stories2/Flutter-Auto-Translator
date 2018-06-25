@@ -39,15 +39,15 @@ class CameraPageState extends State<CameraPage> {
               )
           ),
           CameraControlWidget(),
-          new Padding(
-              padding: new EdgeInsets.all(5.0),
-              child: new Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  ThumbnailPreviewWidget()
-                ],
-              ),
-          )
+//          new Padding(
+//              padding: new EdgeInsets.all(5.0),
+//              child: new Row(
+//                mainAxisAlignment: MainAxisAlignment.start,
+//                children: <Widget>[
+//                  ThumbnailPreviewWidget()
+//                ],
+//              ),
+//          )
         ],
       ),
       backgroundColor: Colors.orange,
