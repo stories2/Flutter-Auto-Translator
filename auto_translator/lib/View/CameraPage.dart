@@ -4,18 +4,21 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
+import '../Model/PictureData.dart';
 
 class CameraPage extends StatefulWidget {
 
   TabController homeTabController;
+  PictureData pictureData;
 
-  CameraPage(TabController homeTabController) {
+  CameraPage(TabController homeTabController, PictureData pictureData) {
     this.homeTabController = homeTabController;
+    this.pictureData = pictureData;
   }
 
   @override
   State createState() {
-    return new CameraPageState(homeTabController);
+    return new CameraPageState(homeTabController, pictureData);
   }
 }
 
@@ -24,9 +27,11 @@ class CameraPageState extends State<CameraPage> {
   TabController homeTabController;
   List<CameraDescription> cameras;
   CameraController cameraController;
+  PictureData pictureData;
 
-  CameraPageState(TabController homeTabController) {
+  CameraPageState(TabController homeTabController, PictureData pictureData) {
     this.homeTabController = homeTabController;
+    this.pictureData = pictureData;
   }
 
   @override
@@ -139,6 +144,7 @@ class CameraPageState extends State<CameraPage> {
     try {
       await cameraController.takePicture(exportFilePath);
       print("picture saved at: " + exportFilePath);
+      pictureData.SetPictureSavedPath(exportFilePath);
       homeTabController.index = 1;
       return exportFilePath;
     }

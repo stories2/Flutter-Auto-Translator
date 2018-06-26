@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './CameraPage.dart';
 import './TranslateHistoryPage.dart';
 import './DevelopPage.dart';
+import '../Model/PictureData.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -15,6 +16,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
 
   TabController homeTabController;
+  PictureData pictureData;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,8 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
       body: new TabBarView(
           controller: homeTabController,
           children: <Widget>[
-            new CameraPage(homeTabController),
-            new TranslateHistoryPage(),
+            new CameraPage(homeTabController, pictureData),
+            new TranslateHistoryPage(pictureData),
             new DevelopPage()
           ]
       ),
@@ -61,6 +63,9 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
         length: 3,
         vsync: this
     );
+    setState(() {
+      pictureData = new PictureData();
+    });
   }
 
   @override

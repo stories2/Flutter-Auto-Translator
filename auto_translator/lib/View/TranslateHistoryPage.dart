@@ -1,18 +1,26 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import '../Model/PictureData.dart';
 
 class TranslateHistoryPage extends StatefulWidget {
 
+  PictureData pictureData;
+
+  TranslateHistoryPage(this.pictureData);
+
   @override
   State createState() {
-    return new TranslateHistoryPageState();
+    return new TranslateHistoryPageState(pictureData);
   }
 }
 
 class TranslateHistoryPageState extends State<TranslateHistoryPage> {
 
-  String translatedResult = "", imageFilePath;
+  String translatedResult = "";
+  PictureData pictureData;
+
+  TranslateHistoryPageState(this.pictureData);
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +66,8 @@ class TranslateHistoryPageState extends State<TranslateHistoryPage> {
           ),
           child: new Container(
             child: new Center(
-              child: imageFilePath == null ?
-              NotReadyForShowPicture() : ShowPicture(),
+              child: pictureData.GetPictureSavedPath() == null ?
+              NotReadyForShowPicture() : ShowPicture(pictureData.GetPictureSavedPath()),
             ),
             decoration: new BoxDecoration(
                 color: Colors.black,
@@ -73,8 +81,8 @@ class TranslateHistoryPageState extends State<TranslateHistoryPage> {
     );
   }
 
-  Widget ShowPicture() {
-    return new Image.file(new File(imageFilePath));
+  Widget ShowPicture(String currentTakenPictureSavedPath) {
+    return new Image.file(new File(currentTakenPictureSavedPath));
   }
 
   Widget NotReadyForShowPicture() {
@@ -91,8 +99,15 @@ class TranslateHistoryPageState extends State<TranslateHistoryPage> {
   @override
   void initState() {
     super.initState();
-    this.setState((){
-      imageFilePath = null;
-    });
+    print("history view init");
+//    this.setState((){
+//      try {
+//        imageFilePath = pictureData.GetPictureSavedPath();
+//        print("history pic path: " + imageFilePath);
+//      }
+//      catch (except) {
+//        print("cannot get pic path: " + except);
+//      }
+//    });
   }
 }
