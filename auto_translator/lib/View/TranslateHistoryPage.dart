@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import '../Model/PictureData.dart';
+import '../Core/TextDetection.dart';
 
 class TranslateHistoryPage extends StatefulWidget {
 
@@ -19,6 +20,7 @@ class TranslateHistoryPageState extends State<TranslateHistoryPage> {
 
   String translatedResult = "";
   PictureData pictureData;
+  TextDetection textDetection;
 
   TranslateHistoryPageState(this.pictureData);
 
@@ -82,6 +84,8 @@ class TranslateHistoryPageState extends State<TranslateHistoryPage> {
   }
 
   Widget ShowPicture(String currentTakenPictureSavedPath) {
+    textDetection.SetImageFile(currentTakenPictureSavedPath);
+    textDetection.AnalyzeTextFromPicture();
     return new Image.file(new File(currentTakenPictureSavedPath));
   }
 
@@ -100,6 +104,7 @@ class TranslateHistoryPageState extends State<TranslateHistoryPage> {
   void initState() {
     super.initState();
     print("history view init");
+    textDetection = new TextDetection();
 //    this.setState((){
 //      try {
 //        imageFilePath = pictureData.GetPictureSavedPath();
