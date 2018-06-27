@@ -22,7 +22,7 @@ class TextDetection {
     try {
       currentDetectedTextList = await firebaseVisionTextDetector.detectFromPath(imageFilePath);
       for(VisionText detectedString in currentDetectedTextList) {
-        print("detected text: " + detectedString.text);
+        print("detected text: " + detectedString.text + " rect: ${detectedString.rect}");
       }
     }
     catch(except) {
